@@ -1,0 +1,194 @@
+/* RnD 버전 3 — 자격 확인 위저드
+   컨셉: The League/Raya(선별=매력) · Academic Singles(퀴즈식 온보딩) · Typeform(한 번에 한 단계 + 진행바)
+   base.css(토큰·폼·.field/.counter/.todo/.footer) 위에 얹는 레이아웃/위저드 스타일. 토큰 재정의 금지. */
+
+/* ── 상단 내비 ── */
+.nav {
+  position: sticky; top: 0; z-index: 10; background: rgba(255, 255, 255, .9);
+  backdrop-filter: saturate(180%) blur(8px);
+  border-bottom: 1px solid var(--border-default);
+}
+.nav .inner {
+  max-width: 960px; margin: 0 auto; padding: 14px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav .logo { font-weight: 700; font-size: 18px; color: var(--brand-600); letter-spacing: -0.5px; text-decoration: none; }
+.nav .nav-cta {
+  font-size: 14px; font-weight: 700; color: var(--brand-600); background: none;
+  border: none; padding: 6px 4px; cursor: pointer; font-family: inherit;
+}
+
+/* ── 인트로 히어로 ── */
+.hero {
+  text-align: center; padding: 80px 20px 72px;
+  background: radial-gradient(120% 85% at 50% 0%, var(--brand-50), #fff 72%);
+}
+/* 히어로 로고 마크 — PNG(이미 민트 타일 포함)를 둥근 모서리로 직접 노출 */
+.hero-mark {
+  width: 58px; height: 58px; margin: 0 auto 22px;
+  border-radius: 15px; overflow: hidden; display: inline-flex;
+  box-shadow: 0 6px 20px rgba(7, 216, 190, .22);
+}
+.hero-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.hero .eyebrow {
+  font-size: 13px; font-weight: 700; letter-spacing: 1px;
+  color: var(--brand-600); margin-bottom: 18px;
+}
+.hero h1 {
+  font-size: 32px; font-weight: 700; line-height: 1.32; letter-spacing: -1px;
+  margin: 0 auto 16px; max-width: 540px;
+}
+.hero .sub { font-size: 17px; color: var(--text-secondary); margin: 0 auto 32px; max-width: 460px; line-height: 1.6; }
+
+/* 시작 버튼(링크형이 아닌 button) */
+.btn-start {
+  display: inline-block; background: var(--brand-500); color: #fff; font-weight: 700;
+  font-size: 17px; padding: 17px 40px; border: none; border-radius: var(--radius-lg);
+  font-family: inherit; letter-spacing: -0.3px; cursor: pointer;
+  transition: background .15s, transform .05s; box-shadow: 0 4px 16px rgba(25, 31, 40, .10);
+}
+.btn-start:hover { background: var(--brand-600); }
+.btn-start:active { transform: translateY(1px); }
+.hero .reassure { margin-top: 18px; font-size: 13px; color: var(--text-tertiary); }
+
+/* 정원 FOMO — 중앙 정렬된 히어로 CTA 아래로 정렬(.capacity 외형은 base.css 그대로) */
+.hero .capacity { margin: 22px auto 0; text-align: center; }
+
+/* 신뢰 요소(선별 = 매력) */
+.trust {
+  max-width: 440px; margin: 40px auto 0; padding-top: 22px;
+  border-top: 1px solid var(--border-default);
+  display: flex; justify-content: center; align-items: center;
+  font-size: 13px; color: var(--text-secondary);
+}
+.trust span { padding: 0 16px; font-weight: 500; letter-spacing: 0.3px; }
+.trust span + span { border-left: 1px solid var(--border-default); }
+@media (max-width: 420px) { .trust span { padding: 0 10px; font-size: 12px; } }
+
+/* ── 위저드 컨테이너 ── */
+.wizard-wrap { max-width: var(--maxw); margin: 0 auto; padding: 28px 20px 40px; }
+
+/* 진행 상태: 막대 + 라벨 */
+.progress { margin-bottom: 22px; }
+.progress .meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.progress .step-label { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+.progress .step-count { font-size: 13px; font-weight: 700; color: var(--brand-600); }
+.progress .bar { height: 8px; background: var(--border-default); border-radius: 999px; overflow: hidden; }
+.progress .fill {
+  height: 100%; width: 25%; background: var(--brand-500); border-radius: 999px;
+  transition: width .35s cubic-bezier(.4, 0, .2, 1);
+}
+
+/* 위저드 카드(base.css .card 위에 약간만 조정) */
+.wizard-card { padding-top: 24px; }
+
+/* 단계 패널: 한 번에 하나만 */
+.step-panel { display: none; }
+.step-panel.active { display: block; animation: stepIn .3s ease both; }
+@keyframes stepIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.step-panel .step-title { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; margin: 0 0 4px; }
+.step-panel .step-sub { font-size: 14px; color: var(--text-secondary); margin: 0 0 22px; }
+
+/* 그룹 소제목(학력 단계 내부 구분용) */
+.group-label {
+  font-size: 12px; font-weight: 700; color: var(--brand-600); letter-spacing: 0.2px;
+  margin: 18px 0 10px; text-transform: none;
+}
+.group-label:first-child { margin-top: 0; }
+
+/* 이전/다음 내비게이션 */
+.nav-btns { display: flex; gap: 10px; margin-top: 24px; }
+.btn-prev, .btn-next {
+  height: 56px; border-radius: var(--radius-lg); font-size: 16px; font-weight: 700;
+  font-family: inherit; letter-spacing: -0.3px; cursor: pointer;
+  transition: background .15s, border-color .15s, transform .05s;
+}
+.btn-prev {
+  flex: 0 0 auto; min-width: 96px; padding: 0 20px;
+  background: #fff; color: var(--text-secondary); border: 1.5px solid var(--border-strong);
+}
+.btn-prev:hover { background: #F8F9FA; border-color: var(--text-tertiary); }
+.btn-prev:active { transform: translateY(1px); }
+.btn-next {
+  flex: 1 1 auto; background: var(--brand-500); color: #fff; border: none;
+}
+.btn-next:hover { background: var(--brand-600); }
+.btn-next:active { transform: translateY(1px); }
+
+/* 단계별 안내 메시지(검증 실패 등) */
+.step-msg { margin-top: 14px; font-size: 14px; font-weight: 700; min-height: 20px; color: var(--error); }
+.step-msg.busy { color: var(--text-secondary); }
+
+.privacy-note { display: flex; gap: 6px; justify-content: center; font-size: 12px; color: var(--text-tertiary); margin-top: 18px; }
+
+/* ── 결과 화면 ── */
+.result-wrap { max-width: 460px; margin: 0 auto; padding: 70px 24px 60px; text-align: center; }
+.result-wrap .check {
+  width: 80px; height: 80px; border-radius: 50%; background: var(--brand-50);
+  margin: 0 auto 22px; display: flex; align-items: center; justify-content: center;
+  animation: pop .4s cubic-bezier(.34, 1.56, .64, 1) both;
+}
+@keyframes pop { from { transform: scale(.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.result-wrap h1 { font-size: 24px; font-weight: 700; margin: 0 0 10px; letter-spacing: -0.5px; }
+.result-wrap > p { color: var(--text-secondary); margin: 0 0 26px; line-height: 1.6; }
+.qnum {
+  border: 1.5px solid var(--brand-500); border-radius: 18px; padding: 24px;
+  background: var(--brand-50); margin-bottom: 24px;
+}
+.qnum .lbl { font-size: 13px; color: var(--text-secondary); }
+.qnum .v { font-size: 36px; font-weight: 700; color: var(--brand-600); margin-top: 4px; letter-spacing: -1px; }
+.nextstep {
+  text-align: left; border: 1px solid var(--border-default); border-radius: 16px;
+  padding: 18px 20px; font-size: 14px; color: var(--text-secondary); line-height: 1.6;
+}
+.nextstep b { color: var(--text-primary); }
+
+/* 동적 노출 박사 칸 */
+#phd-group[hidden] { display: none; }
+
+/* ─────────── 랜딩 내용 섹션(편집형, 박스/이모지 없이) ─────────── */
+.wrap { max-width: 680px; margin: 0 auto; padding: 0 20px; }
+
+.block { padding: 50px 0; border-top: 1px solid var(--border-default); }
+.sec-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 1px; color: var(--brand-600); margin-bottom: 14px; }
+.block-h { font-size: 26px; font-weight: 700; line-height: 1.38; letter-spacing: -0.8px; margin: 0 0 16px; }
+.block-p { font-size: 16px; color: var(--text-secondary); line-height: 1.75; margin: 0; }
+
+/* 검증 절차 — 넘버드 리스트(박스 X, 얇은 구분선) */
+.num-list { list-style: none; padding: 0; margin: 6px 0 0; }
+.num-list li { display: flex; gap: 18px; padding: 22px 0; border-top: 1px solid var(--border-default); }
+.num-list li:first-child { border-top: none; padding-top: 6px; }
+.num-list .n { font-size: 22px; font-weight: 700; color: var(--brand-500); min-width: 34px; line-height: 1.3; }
+.num-list b { display: block; font-size: 16px; margin-bottom: 4px; }
+.num-list p { margin: 0; font-size: 14px; color: var(--text-secondary); line-height: 1.65; }
+
+/* 회원 구성 — 타이포 통계 줄(박스 X) */
+.stats { display: flex; margin-top: 8px; }
+.stat { flex: 1; text-align: center; padding: 6px 0; }
+.stat + .stat { border-left: 1px solid var(--border-default); }
+.snum { font-size: 30px; font-weight: 700; color: var(--text-primary); letter-spacing: -1px; }
+.slbl { font-size: 13px; color: var(--text-secondary); margin-top: 6px; }
+
+/* 미션 — 풀폭 강조 밴드 */
+.manifesto { background: var(--brand-50); padding: 60px 0; margin: 50px 0; }
+.manifesto .m-quote { font-size: 21px; font-weight: 500; line-height: 1.65; letter-spacing: -0.3px; color: var(--text-primary); margin: 0; }
+.manifesto .m-by { font-size: 13px; color: var(--text-secondary); margin: 18px 0 0; }
+
+/* FAQ — 구분선 리스트 */
+.faq { margin: 6px 0 0; }
+.faq > div { border-top: 1px solid var(--border-default); padding: 6px 0; }
+.faq > div:first-child { border-top: none; }
+.faq dt { font-size: 16px; font-weight: 700; margin: 14px 0 6px; }
+.faq dd { margin: 0 0 14px; font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+
+/* 마지막 CTA */
+.final-cta { text-align: center; padding: 64px 20px 76px; }
+.final-cta h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.6px; margin: 0 0 8px; }
+.final-cta p { color: var(--text-secondary); margin: 0 0 26px; }
+
+@media (min-width: 560px) { .block-h { font-size: 28px; } }
