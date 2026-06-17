@@ -148,8 +148,26 @@
 }
 .nextstep b { color: var(--text-primary); }
 
-/* 동적 노출 박사 칸 */
-#phd-group[hidden] { display: none; }
+/* PASS 인증 버튼 */
+.btn-pass {
+  flex: 0 0 auto;
+  padding: 0 18px;
+  height: 48px;
+  background: #5D20D0;
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .15s, opacity .15s;
+  letter-spacing: -0.2px;
+}
+.btn-pass:hover:not(:disabled) { background: #4A19A8; }
+.btn-pass:disabled { opacity: 0.7; cursor: not-allowed; }
+.btn-pass.done { background: var(--brand-500); }
 
 /* ─────────── 랜딩 내용 섹션(편집형, 박스/이모지 없이) ─────────── */
 .wrap { max-width: 680px; margin: 0 auto; padding: 0 20px; }
