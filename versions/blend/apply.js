@@ -73,8 +73,7 @@ function bindCounter(inputId, counterId) {
   }
   input.addEventListener("input", update); update();
 }
-bindCounter("intro", "intro-counter");
-bindCounter("ideal", "ideal-counter");
+// (준회원 최소 폼: 한줄소개·이상형 필드 제거 — 글자수 카운터 미사용)
 
 phone.addEventListener("input", function () { phone.value = phone.value.replace(/[^0-9]/g, ""); });
 
@@ -98,11 +97,8 @@ function validate(data) {
   if (isPhd && empty("박사_대학교")) return "박사 대학교를 입력해 주세요.";
   if (isPhd && empty("박사_전공")) return "박사 전공을 입력해 주세요.";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data["이메일"] || "")) return "올바른 이메일 주소를 입력해 주세요.";
-  if (!/^[0-9]{9,}$/.test(data["전화번호"] || "")) return "전화번호를 숫자만(9자리 이상) 입력해 주세요.";
-  var h = Number(data["키"]);
-  if (!h || h < 140 || h > 220) return "키는 140~220(cm) 사이 숫자로 입력해 주세요.";
-  if (charLen(data["한줄소개"]) < MIN || charLen(data["한줄소개"]) > MAX) return "'나를 한 줄로'는 " + MIN + "~" + MAX + "자로 입력해 주세요.";
-  if (charLen(data["한줄이상형"]) < MIN || charLen(data["한줄이상형"]) > MAX) return "'이상형 한 줄로'는 " + MIN + "~" + MAX + "자로 입력해 주세요.";
+  // 전화번호: 선택 — 입력한 경우에만 형식 검사
+  if (data["전화번호"] && !/^[0-9]{9,}$/.test(data["전화번호"])) return "전화번호는 숫자만(9자리 이상) 입력해 주세요.";
   return null;
 }
 

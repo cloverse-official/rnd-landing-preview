@@ -51,7 +51,7 @@
           <div class="field"><label>박사 전공 <span class="req">*</span></label><input type="text" name="박사_전공" placeholder="예) 통계학" /></div>
         </div>
 
-        <div class="form-group-label">연락처 · 프로필</div>
+        <div class="form-group-label">연락처</div>
         <div class="field" id="email-field">
           <label>이메일 <span class="req">*</span> <span class="note">(재학=학교 / 졸업=직장 이메일)</span></label>
           <div class="verify-row">
@@ -64,15 +64,7 @@
           </div>
           <div class="verify-msg" id="verify-msg"></div>
         </div>
-        <div class="field"><label>전화번호 <span class="req">*</span> <span class="note">(숫자만)</span></label><input type="text" name="전화번호" id="phone" inputmode="numeric" placeholder="01012345678" /></div>
-        <div class="field"><label>성별 <span class="req">*</span></label>
-          <select name="성별"><option value="">선택하세요</option><option value="남성">남성</option><option value="여성">여성</option></select>
-        </div>
-        <div class="field"><label>키 (cm) <span class="req">*</span></label><input type="number" name="키" id="height" min="140" max="220" placeholder="175" /></div>
-
-        <div class="form-group-label">당신을 한 줄로</div>
-        <div class="field"><label>나를 한 줄로 표현하면? <span class="req">*</span></label><input type="text" name="한줄소개" id="intro" maxlength="50" placeholder="20자 이상 자유롭게 적어주세요" /><div class="counter" id="intro-counter">0 / 50자 (최소 20자)</div></div>
-        <div class="field"><label>이상형을 한 줄로 표현하면? <span class="req">*</span></label><input type="text" name="한줄이상형" id="ideal" maxlength="50" placeholder="20자 이상 자유롭게 적어주세요" /><div class="counter" id="ideal-counter">0 / 50자 (최소 20자)</div></div>
+        <div class="field"><label>전화번호 <span class="note">(선택 · 숫자만)</span></label><input type="text" name="전화번호" id="phone" inputmode="numeric" placeholder="01012345678" /></div>
         <button type="submit">사전가입 신청하기</button>
         <div id="msg"></div>
       </form>
